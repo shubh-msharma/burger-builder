@@ -1,0 +1,24 @@
+.formEle{
+    width: 80%;
+    padding: 0;
+    margin: 3px 0px;
+}
+.formEle input:focus{
+    outline: none;
+}
+.formEle input{
+    outline: none;
+    padding: 5px;
+}
+ .formEle input,select{
+     width: 100%;
+ }
+
+ .valid{
+     border: 1px solid darkgreen;
+ }
+
+ .invalid{
+     border: 1px solid red;
+     background-color: lightsalmon;
+ }

@@ -1,0 +1,19 @@
+
+*{
+    box-sizing: border-box;
+}
+.order{
+    border-left: 3px solid darkred;
+    width: 80%;
+    padding: 10px;
+    margin: 5px 0;
+    box-shadow: 3px 4px 2px gray;
+}
+
+.order span{
+    padding: 4px;
+    font-size: 1.1rem;
+    margin: 2px 4px;
+    border: 1px solid black;
+    box-shadow: 2px 3px 2px 3px lightgray;
+}

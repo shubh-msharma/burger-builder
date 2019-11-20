@@ -1,0 +1,9 @@
+.orders{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin: 3px;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+}

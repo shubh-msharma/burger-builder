@@ -1,0 +1,15 @@
+.contactData{
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.contactForm{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    box-shadow: 3px 3px 4px 3px lightgray;
+}
