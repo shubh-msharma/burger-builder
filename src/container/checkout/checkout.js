@@ -2,28 +2,10 @@ import React, { Component } from 'react'
 import CheckoutSummary from '../../components/order/checkout summary/checkoutSummary'
 import { Route } from 'react-router'
 import ContactData from './contact data/contactData'
-export default class checkout extends Component {
-    state = {
-        ingredients: undefined,
-        price:null
-    }
+import { connect} from 'react-redux'
 
-    componentDidMount() {
-        const ingredients = {};
-        let price = 0;
-        const query = new URLSearchParams(this.props.location.search)
-        for (let entr of query.entries()) {
-            if(entr[0] === "price"){
-                price = +entr[1]
-            }else{
-            ingredients[entr[0]] = +entr[1];}
-        }
-        this.setState(prevState => {
-            prevState.ingredients = ingredients
-            prevState.price = price;
-            return prevState
-        })
-    }
+class checkout extends Component {
+    
     checkoutCancelHandler = () => {
         this.props.history.goBack()
     }
@@ -36,16 +18,22 @@ export default class checkout extends Component {
         return (
             <div>
                 {
-                    this.state.ingredients ? <CheckoutSummary
+                    this.props.ingredients ? <CheckoutSummary
                         checkoutCancelHandler={this.checkoutCancelHandler}
                         checkoutContinueHandler={this.checkoutContinueHandler}
-                        ingredients={this.state.ingredients} /> : "loading...."
+                        ingredients={this.props.ingredients} /> : "loading...."
                 }
-                <Route path = {this.props.match.url+'/contact-data'} render = {(props)=><ContactData {...props} ingredients = {this.state.ingredients} price = {this.state.price}/>}/>
+                <Route path = {this.props.match.url+'/contact-data'} component = {ContactData}/>
             </div>
         )
     }
 }
 
+const mapStateToProps = state=>{
+    return {
+        ingredients:state.ingredients
+    }
+}
 
+export default connect(mapStateToProps)(checkout)
 

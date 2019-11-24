@@ -5,8 +5,8 @@ import './contactData.css'
 import axios from 'axios'
 import Modal from '../../../components/UI/modal/modal'
 import Spinner from '../../../components/UI/spinner/spinner'
-
-export default class contactData extends Component {
+import { connect } from 'react-redux' 
+class contactData extends Component {
 
     state = {
         orderForm:{
@@ -185,3 +185,13 @@ export default class contactData extends Component {
         )
     }
 }
+
+
+const mapStateToProps = state=>{
+    return{
+        ingredients:state.ingredients,
+        price:state.price
+    }
+}
+
+export default connect(mapStateToProps)(contactData);
