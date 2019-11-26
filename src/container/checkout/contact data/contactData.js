@@ -5,7 +5,9 @@ import './contactData.css'
 import axios from 'axios'
 import Modal from '../../../components/UI/modal/modal'
 import Spinner from '../../../components/UI/spinner/spinner'
-import { connect } from 'react-redux' 
+import { connect } from 'react-redux'
+import ErrorHandler from '../../../hoc/errorHandlerComponent/errorHandlerComp'
+import * as actions from '../../../store/actions/index'
 class contactData extends Component {
 
     state = {
@@ -101,8 +103,7 @@ class contactData extends Component {
                 valid:true,
                 touched:false
             }
-        },
-        loadindDataToServer:false
+        }
     }
 
     checkValidity = (value,rule)=>{
@@ -116,7 +117,7 @@ class contactData extends Component {
         return isValid
     }
 
-    submitDataHandler = async(event)=>{
+    submitDataHandler = (event)=>{
         event.preventDefault();
         this.setState((oldState) => {
             oldState.loadindDataToServer = true;
@@ -131,17 +132,7 @@ class contactData extends Component {
             price: this.props.price,
             customer:customer
         }
-
-                try {
-            const res = await axios.post("https://burgerbuilder-103ca.firebaseio.com/order.json", order);
-            this.setState((oldState) => {
-                oldState.loadindDataToServer = false;
-                return oldState
-            })
-            this.props.history.replace('/')
-        } catch (error) {
-            console.log(error);
-        }
+        this.props.onOrderBurger(order);
     }
 
     inputEventHandler =(event,key)=>{
@@ -165,7 +156,7 @@ class contactData extends Component {
 
         return (
             <div className="contactData">
-                {this.state.loadindDataToServer?<Modal showModal={true}><Spinner/></Modal>:null}
+                {this.props.loadindDataToServer?<Modal showModal={true}><Spinner/></Modal>:null}
             <form className = "contactForm" onSubmit = {this.submitDataHandler}>
                 {
                     Object.keys(this.state.orderForm).map(key=>{
@@ -189,9 +180,16 @@ class contactData extends Component {
 
 const mapStateToProps = state=>{
     return{
-        ingredients:state.ingredients,
-        price:state.price
+        ingredients:state.burgerBuildersReducer.ingredients,
+        price:state.burgerBuildersReducer.price,
+        loadindDataToServer:state.ordersReducer.loadindDataToServer
     }
 }
 
-export default connect(mapStateToProps)(contactData);
+const mapActionToProps = dispatch=>{
+    return {
+        onOrderBurger:(orderData)=>{dispatch(actions.purchaseBurger(orderData))}
+    }
+}
+
+export default connect(mapStateToProps,mapActionToProps)(ErrorHandler(contactData,axios));

@@ -3,37 +3,22 @@ import axios from 'axios';
 import Order from "../../components/order/order"
 import Spinner from '../../components/UI/spinner/spinner'
 import "./orders.css"
+import * as actions from '../../store/actions/index'
+import {connect} from 'react-redux'
 
-export default class orders extends Component {
+class orders extends Component {
     
-    state = {
-        order : [],
-        loading:true
-    }
-
     componentDidMount(){
-        const fetchedOrders = []
-        axios.get('https://burgerbuilder-103ca.firebaseio.com/order.json')
-            .then(orders=>{
-                for(let key in orders.data){
-                    fetchedOrders.push({
-                        ...orders.data[key],
-                        key
-                    })
-                }
-
-                this.setState({order:fetchedOrders,loading:false})
-            }).catch(err=>{
-                console.log(err);
-            })
+        this.props.fetchOrders()
+        
     }
 
     
 
     render() {
         let orders =<Spinner/>
-        if(!this.state.loading){
-            orders = this.state.order.map(order=>{
+        if(!this.props.gettingOrdersFromServer){
+            orders = this.props.orders.map(order=>{
                 return <Order key={order.key} price ={ order.price } ingredients = {order.ingredients}/>
             })
         }
@@ -47,3 +32,20 @@ export default class orders extends Component {
         )
     }
 }
+
+
+const mapStateToProps = state=>{
+    return {
+        orders:state.ordersReducer.oders,
+        gettingOrdersFromServer:state.ordersReducer.gettingOrdersFromServer
+    }
+
+}
+
+const mapActionToProps = dispatch=>{
+    return {
+        fetchOrders:()=>dispatch(actions.fetchOders())
+    }
+}
+
+export default connect(mapStateToProps,mapActionToProps)(orders)

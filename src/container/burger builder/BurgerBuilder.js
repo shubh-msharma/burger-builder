@@ -8,31 +8,21 @@ import axios from 'axios'
 import Spinner from '../../components/UI/spinner/spinner'
 import ErrorHandlerComp from '../../hoc/errorHandlerComponent/errorHandlerComp'
 import { connect } from 'react-redux'
-import * as actionType from '../../store/action'
+import * as actions from '../../store/actions/index'
 
 
 class BurgerBuilder extends Component {
     state = {
         purchasing: false,
         loadindDataToServer: false,
-        error: false
+        
     }
 
     // // life cycle hooks
 
-    // componentDidMount() {
-    //     axios.get("https://burgerbuilder-103ca.firebaseio.com/ingredients.json")
-    //         .then(res => {
-    //             if (res) {
-    //                 this.setState({
-    //                     ingredients: res.data
-    //                 })
-    //             }
-    //             else {
-    //                 this.setState({ error: true })
-    //             }
-    //         })
-    // }
+    componentDidMount() {
+        this.props.fetchIngredietnsFromServer()
+    }
 
 
     
@@ -46,7 +36,7 @@ class BurgerBuilder extends Component {
     }
 
     continuePurchaseHandler = async () => {
-        
+        this.props.onInitPurchase()
         this.props.history.push('/checkout');
     }
 
@@ -62,7 +52,7 @@ class BurgerBuilder extends Component {
         const shouldOrderButtonDisable = !Object.values(shouldButtonDisable).includes(false);
         // ******itta hi tha button ko disable krne ka array dene wala code******
 
-        let burger = this.state.error ? <Modal showModal={this.state.error} backdropClicked={this.closeModalHandler}>ingredients cannot be loaded</Modal> : <Spinner />;
+        let burger = this.props.error ? <Modal showModal={this.props.error} backdropClicked={this.closeModalHandler}>ingredients cannot be loaded</Modal> : <Spinner />;
         let contentOfModal = null;
         if (this.props.ingredients) {
             burger = (
@@ -115,15 +105,18 @@ class BurgerBuilder extends Component {
 
 const mapStateToProps = (state)=>{
     return {
-        ingredients : state.ingredients,
-        price:state.price
+        ingredients : state.burgerBuildersReducer.ingredients,
+        price:state.burgerBuildersReducer.price,
+        error:state.burgerBuildersReducer.error
     }
 }
 
 const mapActionToProps = (dispatch)=>{
     return {
-addIngredientHandler:(ingType)=>dispatch({type:actionType.ADD_INGREDIENT,ingredient:ingType}),
-removeIngredientHandler:(ingType)=>dispatch({type:actionType.REMOVE_INGREDIENT,ingredient:ingType})
+addIngredientHandler:(ingType)=>dispatch(actions.addIngredients(ingType)),
+removeIngredientHandler:(ingType)=>dispatch(actions.removeIngredients(ingType)),
+fetchIngredietnsFromServer:()=>{dispatch(actions.initIngredients())},
+onInitPurchase:()=>dispatch(actions.purchased())
 
     }
 }
