@@ -26,9 +26,9 @@ export const purchaseBurgerStart = () =>{
 }
 
 export const purchaseBurger = (orderData)=>{
-    return dispatch=>{
+    return (dispatch,getState)=>{
             dispatch(purchaseBurgerStart())
-            axios.post("https://burgerbuilder-103ca.firebaseio.com/order.json", orderData)
+            axios.post(`https://burgerbuilder-103ca.firebaseio.com/order.json?auth=${getState().authReducer.token}`, orderData)
                 .then(res=>{
                     dispatch(purchaseBurgerSuccess(res.data.name,orderData))
                 }).catch(error=>{
@@ -63,12 +63,13 @@ export const fetchOrderFail = (error)=>{
     return {
         type:actionTypes.FETCH_ORDER_FAIL,
         error:error
-    }
+    } 
 }
 
-export const fetchOders = ()=>{
+export const fetchOders = (token,userId)=>{
     return dispatch=>{
-        axios.get('https://burgerbuilder-103ca.firebaseio.com/order.json')
+        const queryParams = '?auth='+token+'&orderBy="userId"&equalTo="'+userId+'"'
+        axios.get("https://burgerbuilder-103ca.firebaseio.com/order.json"+queryParams)
             .then(orders=>{
                 const fetchedOrders = []
                 for(let key in orders.data){

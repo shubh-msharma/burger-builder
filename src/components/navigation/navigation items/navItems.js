@@ -6,8 +6,11 @@ export default function navItems(props) {
         <ul className = "navItems">
 
             <NavItem link = "/">Burger builder</NavItem>
-            <NavItem link = "/orders">orders</NavItem>
-            <NavItem link = "/auth">login</NavItem>
+            {props.isAuthenticated?<NavItem link = "/orders">orders</NavItem>:null}
+            {
+                props.isAuthenticated?<NavItem link = "/logout">logout</NavItem>:<NavItem link = "/auth">login</NavItem>
+            }
+            
         </ul>
     )
 }

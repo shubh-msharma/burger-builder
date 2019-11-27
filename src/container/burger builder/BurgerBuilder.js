@@ -9,13 +9,13 @@ import Spinner from '../../components/UI/spinner/spinner'
 import ErrorHandlerComp from '../../hoc/errorHandlerComponent/errorHandlerComp'
 import { connect } from 'react-redux'
 import * as actions from '../../store/actions/index'
-
+import { Redirect } from 'react-router'
 
 class BurgerBuilder extends Component {
     state = {
         purchasing: false,
         loadindDataToServer: false,
-        
+
     }
 
     // // life cycle hooks
@@ -25,11 +25,17 @@ class BurgerBuilder extends Component {
     }
 
 
-    
+
 
     // handler for adding removing modal by changinging value of <purchasing>
     purchaseHandler = () => {
-        this.setState({ purchasing: true });
+        if (this.props.isAuthenticated) {
+            this.props.onSetAuthRedirectPath('/')
+            this.setState({ purchasing: true });
+        } else {
+            this.props.onSetAuthRedirectPath('/checkout');
+            this.props.history.push('/auth')
+        }
     }
     closeModalHandler = () => {
         this.setState({ purchasing: false, error: false })
@@ -68,6 +74,7 @@ class BurgerBuilder extends Component {
                         currentPrice={this.props.price}
                         shouldOrderButtonDisable={shouldOrderButtonDisable}
                         purchaseHandler={this.purchaseHandler}
+                        isAuthenticated = {this.props.isAuthenticated}
                     />
                 </Aux>);
             contentOfModal = <OrderSummary
@@ -103,26 +110,28 @@ class BurgerBuilder extends Component {
     }
 }
 
-const mapStateToProps = (state)=>{
+const mapStateToProps = (state) => {
     return {
-        ingredients : state.burgerBuildersReducer.ingredients,
-        price:state.burgerBuildersReducer.price,
-        error:state.burgerBuildersReducer.error
+        ingredients: state.burgerBuildersReducer.ingredients,
+        price: state.burgerBuildersReducer.price,
+        error: state.burgerBuildersReducer.error,
+        isAuthenticated: state.authReducer.token !== null
     }
 }
 
-const mapActionToProps = (dispatch)=>{
+const mapActionToProps = (dispatch) => {
     return {
-addIngredientHandler:(ingType)=>dispatch(actions.addIngredients(ingType)),
-removeIngredientHandler:(ingType)=>dispatch(actions.removeIngredients(ingType)),
-fetchIngredietnsFromServer:()=>{dispatch(actions.initIngredients())},
-onInitPurchase:()=>dispatch(actions.purchased())
+        addIngredientHandler: (ingType) => dispatch(actions.addIngredients(ingType)),
+        removeIngredientHandler: (ingType) => dispatch(actions.removeIngredients(ingType)),
+        fetchIngredietnsFromServer: () => { dispatch(actions.initIngredients()) },
+        onInitPurchase: () => dispatch(actions.purchased()),
+        onSetAuthRedirectPath:(path)=>dispatch(actions.setAuthRedirectPath(path))
 
     }
 }
 
 
-export default  connect(mapStateToProps,mapActionToProps) (ErrorHandlerComp(BurgerBuilder, axios));
+export default connect(mapStateToProps, mapActionToProps)(ErrorHandlerComp(BurgerBuilder, axios));
 
 
 

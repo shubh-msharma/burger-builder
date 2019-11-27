@@ -20,7 +20,7 @@ export default function buildControls(props) {
             <button 
             disabled = { props.shouldOrderButtonDisable}
             onClick = {props.purchaseHandler}
-            className = "OrderButton">ORDER NOW</button>
+        className = "OrderButton">{props.isAuthenticated?"ORDER NOW":"SignIn to Order"}</button>
         </div>
     )
 }

@@ -11,4 +11,9 @@ export {
 } from './ordersActions'
 
 
-export {authenticate}  from './authActions'
+export {
+    authenticate,
+    logOutUser,
+    setAuthRedirectPath,
+    checkAuthStatus
+}  from './authActions'

@@ -10,7 +10,7 @@ export default function sideDrawer(props) {
         <div className= {props.isSideDrawerOpen?"sideDrawer open":"sideDrawer close"}>
                 <Logo height = "10%"/>
             <nav>
-                <NavItems />
+                <NavItems isAuthenticated = {props.isAuthenticated}/>
             </nav>
         </div>
         </Fragment>

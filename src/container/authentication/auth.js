@@ -6,6 +6,8 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import ErrorHandler from '../../hoc/errorHandlerComponent/errorHandlerComp'
 import * as actions from '../../store/actions/index'
+import Spinner from '../../components/UI/spinner/spinner'
+import { Redirect } from 'react-router'
 class Auth extends Component {
 
     state = {
@@ -36,9 +38,9 @@ class Auth extends Component {
                 },
                 valid: false,
                 touched: false
-            }, 
+            },
         },
-        isSignUp:true
+        isSignUp: true
     }
 
     checkValidity = (value, rule) => {
@@ -54,7 +56,7 @@ class Auth extends Component {
 
     submitDataHandler = (event) => {
         event.preventDefault();
-        this.props.authenticationHandler(this.state.controlForm.mail.elementConfig.value, 
+        this.props.authenticationHandler(this.state.controlForm.mail.elementConfig.value,
             this.state.controlForm.password.elementConfig.value,
             this.state.isSignUp);
 
@@ -71,15 +73,25 @@ class Auth extends Component {
 
     }
 
-    signInOrSignUp = ()=>{
-        this.setState(prevState=>{
-            return{
-                isSignUp:! prevState.isSignUp
+    signInOrSignUp = () => {
+        this.setState(prevState => {
+            return {
+                isSignUp: !prevState.isSignUp
             }
         })
     }
 
+    componentDidMount(){
+        if(!this.props.buildingBurger && this.props.authRedirectPath !=='/'){
+                this.props.setRedirectPath('/')
+        }
+    }
+
     render() {
+        let redirect = null;
+        if (this.props.isAuthenticated) {
+            redirect = <Redirect to={this.props.authRedirectPath} />
+        }
 
         // checking button disablity
         let disable = true
@@ -88,7 +100,11 @@ class Auth extends Component {
         }
 
         return (
+
             <div className="contactData">
+                {
+                    redirect
+                }
                 <form className="contactForm" onSubmit={this.submitDataHandler}>
                     {
                         Object.keys(this.state.controlForm).map(key => {
@@ -99,15 +115,15 @@ class Auth extends Component {
                                 inputEventHandler={(event) => this.inputEventHandler(event, key)} />
                         })
                     }
-                    <Button
+                    {this.props.loading ? <Spinner style={{ width: "50px" }} /> : <Button
                         disable={!disable}
                         btnType="Success"
-                        title={this.state.isSignUp?"LogIn":"SignUp"} />
+                        title={this.state.isSignUp ? "LogIn" : "SignUp"} />}
                 </form>
-                        <Button
-                        clickHandler = {this.signInOrSignUp}
-                        btnType="Cancel"
-                        title={this.state.isSignUp?"new user? click here":"login if already have an account"} />
+                <Button
+                    clickHandler={this.signInOrSignUp}
+                    btnType="Cancel"
+                    title={this.state.isSignUp ? "new user? click here" : "login if already have an account"} />
             </div>
         )
     }
@@ -116,13 +132,18 @@ class Auth extends Component {
 
 const mapStateToProps = state => {
     return {
-
+        loading: state.authReducer.loading,
+        error: state.authReducer.error,
+        isAuthenticated: state.authReducer.token !== null,
+        buildingBurger:state.burgerBuildersReducer.building,
+        authRedirectPath:state.authReducer.authRedirectPath
     }
 }
 
 const mapActionToProps = dispatch => {
     return {
-        authenticationHandler: (email, password,isSignUp) => dispatch(actions.authenticate(email, password,isSignUp))
+        authenticationHandler: (email, password, isSignUp) => dispatch(actions.authenticate(email, password, isSignUp)),
+        setRedirectPath:(path)=>dispatch(actions.setAuthRedirectPath(path))
     }
 }
 

@@ -15,7 +15,7 @@ export default function toolbar(props) {
             <div className = "mobileOnly toggler" onClick = {props.sideDrawerOpenHandler}>menu</div>
             <Logo height = "80%"/>
             <nav className = "desktopOnly">
-                <NavItems/>
+                <NavItems isAuthenticated = {props.isAuthenticated}/>
             </nav>
         </header>
     )
