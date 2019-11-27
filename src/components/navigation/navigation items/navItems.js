@@ -7,7 +7,7 @@ export default function navItems(props) {
 
             <NavItem link = "/">Burger builder</NavItem>
             <NavItem link = "/orders">orders</NavItem>
-
+            <NavItem link = "/auth">login</NavItem>
         </ul>
     )
 }

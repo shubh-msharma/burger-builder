@@ -9,3 +9,6 @@ export {
     purchased,
     fetchOders
 } from './ordersActions'
+
+
+export {authenticate}  from './authActions'
