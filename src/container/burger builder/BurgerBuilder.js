@@ -9,7 +9,6 @@ import Spinner from '../../components/UI/spinner/spinner'
 import ErrorHandlerComp from '../../hoc/errorHandlerComponent/errorHandlerComp'
 import { connect } from 'react-redux'
 import * as actions from '../../store/actions/index'
-import { Redirect } from 'react-router'
 
 class BurgerBuilder extends Component {
     state = {

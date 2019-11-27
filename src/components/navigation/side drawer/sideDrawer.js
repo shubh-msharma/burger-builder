@@ -7,10 +7,10 @@ export default function sideDrawer(props) {
     return (
         <Fragment>
         <Backdrop show = {props.isSideDrawerOpen}  backdropClicked = {props.sideDrawerCloseHandler}/>
-        <div className= {props.isSideDrawerOpen?"sideDrawer open":"sideDrawer close"}>
+        <div className= {props.isSideDrawerOpen?"sideDrawer open":"sideDrawer close"} onClick = {props.sideDrawerCloseHandler}>
                 <Logo height = "10%"/>
             <nav>
-                <NavItems isAuthenticated = {props.isAuthenticated}/>
+                <NavItems isAuthenticated = {props.isAuthenticated} />
             </nav>
         </div>
         </Fragment>

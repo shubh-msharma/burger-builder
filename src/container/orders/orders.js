@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import Order from "../../components/order/order"
 import Spinner from '../../components/UI/spinner/spinner'
 import "./orders.css"
