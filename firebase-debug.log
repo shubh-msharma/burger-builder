@@ -1,0 +1,55 @@
+[debug] [2019-11-27T16:46:59.128Z] ----------------------------------------------------------------------
+[debug] [2019-11-27T16:46:59.136Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Shubham\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2019-11-27T16:46:59.136Z] CLI Version:   7.8.1
+[debug] [2019-11-27T16:46:59.136Z] Platform:      win32
+[debug] [2019-11-27T16:46:59.136Z] Node Version:  v12.13.0
+[debug] [2019-11-27T16:46:59.139Z] Time:          Wed Nov 27 2019 22:16:59 GMT+0530 (India Standard Time)
+[debug] [2019-11-27T16:46:59.139Z] ----------------------------------------------------------------------
+[debug] [2019-11-27T16:46:59.140Z] 
+[debug] [2019-11-27T16:46:59.166Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-11-27T16:46:59.168Z] > authorizing via signed-in user
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\Shubham\Desktop\react\last burger\lastburger
+
+Before we get started, keep in mind:
+
+  * You are initializing in an existing Firebase project directory
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[info] i  .firebaserc already has a default project, using burger.
+[debug] [2019-11-27T16:47:09.536Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/burger  
+ 
+[debug] [2019-11-27T16:47:10.337Z] <<< HTTP RESPONSE 403
+[debug] [2019-11-27T16:47:10.339Z] <<< HTTP RESPONSE BODY
+[debug] [2019-11-27T16:47:10.343Z] HTTP Error: 403, The caller does not have permission
+[debug] [2019-11-27T16:47:10.519Z] FirebaseError: HTTP Error: 403, The caller does not have permission
+    at module.exports (C:\Users\Shubham\AppData\Roaming\npm\node_modules\firebase-tools\lib\responseToError.js:38:12)
+    at Request._callback (C:\Users\Shubham\AppData\Roaming\npm\node_modules\firebase-tools\lib\api.js:39:35)
+    at Request.self.callback (C:\Users\Shubham\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\request\request.js:185:22)
+    at Request.emit (events.js:210:5)
+    at Request.EventEmitter.emit (domain.js:476:20)
+    at Request.<anonymous> (C:\Users\Shubham\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\request\request.js:1161:10)
+    at Request.emit (events.js:210:5)
+    at Request.EventEmitter.emit (domain.js:476:20)
+    at IncomingMessage.<anonymous> (C:\Users\Shubham\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\request\request.js:1083:12)
+    at Object.onceWrapper (events.js:299:28)
+    at IncomingMessage.emit (events.js:215:7)
+    at IncomingMessage.EventEmitter.emit (domain.js:476:20)
+    at endReadableNT (_stream_readable.js:1183:12)
+    at processTicksAndRejections (internal/process/task_queues.js:80:21)
+[error] 
+[error] Error: Failed to get Firebase project burger. Please make sure the project exists and your account has permission to access it.

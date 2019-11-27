@@ -1,3 +1,6 @@
+*{
+    box-sizing: border-box;
+}
 .toolbar{
     width: 100%;
     height: 55px;
@@ -23,8 +26,21 @@
 }
 
 .toggler{
+    padding: 10px;
+    height:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
     color:white;
-    background-color: cadetblue;
+    background-color: rgba(224, 149, 106, 0.452);
+    border: 3px solid transparent;
+    border-radius: 10px;
+    transition: 0.4s all ease;
+}
+.toggler:hover{
+ border: 3px solid black;
+ border-radius: 20px;
 }
 
 @media (max-width:499px){
