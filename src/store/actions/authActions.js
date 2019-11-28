@@ -56,7 +56,6 @@ export const authenticate = (email, password, isSignUp) => {
             url = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCTnaXRoYizx6p-wxGCrV_-su2BjHLpslU"
 
         }
-        console.log(authData)
         axios.post(url, authData)
             .then(res => {
                 const expirationTime = new Date(new Date().getTime() + res.data.expiresIn*1000)

@@ -6,7 +6,7 @@ export default function checkoutSummary(props) {
     return (
         <React.Fragment>
             <div style = {{padding:"10px",textAlign:"center"}}>
-        <h1>sir ye rha aap ka burger</h1>
+        <h1>your burger is ready..</h1>
         <h2>hope this burger tasts well</h2>
         </div>
         <div>
@@ -24,7 +24,7 @@ export default function checkoutSummary(props) {
 
             <Button btnType="Success" 
             clickHandler = {props.checkoutContinueHandler}
-            title="Success"/>
+            title="Continue"/>
         </div>
         </React.Fragment>
     )
